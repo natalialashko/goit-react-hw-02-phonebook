@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ListContacts } from './ListContacts/ListContacts';
 import { Filter } from './Filter/Filter';
+import {Container, TitlePhonebook, TitleContacts, } from './App.styled'
 
 export class App extends Component {
   state = {
@@ -16,9 +17,9 @@ export class App extends Component {
   
 }
   formSubmitHendler = data => {
-    console.log('********', data.name);
+    // console.log('********', data.name);
     const newName=data.name
-    console.log('-----', this.state.contacts);
+    // console.log('-----', this.state.contacts);
     console.log(this.state.contacts.find(obj => obj.name === newName))
     if (this.state.contacts.find(obj => obj.name === newName)) {
      return alert(` ${newName} is already in contacts`);
@@ -36,24 +37,32 @@ export class App extends Component {
     this.setState(({ contacts }) => ({
       contacts: [...contacts, nowEllArray],
     }));
-    // console.log('Now array   -', this.state.contacts);
+    
   };
 
   changeFilter = (e) => {
     this.setState({ filter: e.currentTarget.value });
   }
 
+  removeContact = (id) => {
+    console.log(id);
+    const contacts = this.state.contacts.filter((contact) => {
+      return contact.id !== id;
+    });
+    this.setState({ contacts: contacts });
+}
+
   render() {
-    const { filter} = this.state;
+    const { filter, contacts } = this.state;
     
     return (
-      <>
-        <h1>Phonebook</h1>
+      <Container>
+        <TitlePhonebook>Phonebook</TitlePhonebook>
         <ContactForm onSubmit={this.formSubmitHendler}/>
-        <h2>Contacts</h2>
+        <TitleContacts>Contacts</TitleContacts>
         <Filter value={filter}  onChange={this.changeFilter}/>
-        <ListContacts arrayContacts={this.state.contacts} search={filter}  />
-      </>
+        <ListContacts arrayContacts={contacts} search={filter} removeContact={this.removeContact} />
+      </Container>
     );
   }
 }

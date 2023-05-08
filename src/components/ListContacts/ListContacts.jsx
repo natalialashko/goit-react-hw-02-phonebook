@@ -1,15 +1,32 @@
-import React from 'react';
-import { ContactsListItem } from './ContactsListItem/ContactsListItem';
+import React, { Component } from 'react';
 
-export const ListContacts = ({arrayContacts, search }) => {
+import { Contacts, ItemContacts, InfContacts, DeleteBtn } from './ListContacts.styled';
 
-  return (
-    <div>
-      <ul>
-        {arrayContacts.filter((item)=> item.name.toLowerCase().includes(search.toLowerCase())).map(({ id, name, number }) => (
-          <ContactsListItem key={id} name={name} number={number} />
-        ))}
-      </ul>
-    </div>
-  );
-};
+
+export class ListContacts extends Component {
+  render() {
+    return (
+      <Contacts>
+        <ul>
+          {this.props.arrayContacts
+            .filter(item =>
+              item.name.toLowerCase().includes(this.props.search.toLowerCase())
+            )
+            .map(({ id, name, number }) => (
+              <ItemContacts key={id}>
+                <InfContacts>
+                  <div>
+                    <span>{name}: </span>
+                    <span>{number}</span>
+                  </div>
+                  <DeleteBtn onClick={() => this.props.removeContact(id)}>
+                    Delete
+                  </DeleteBtn>
+                </InfContacts>
+              </ItemContacts>
+            ))}
+        </ul>
+      </Contacts>
+    );
+  }
+}
