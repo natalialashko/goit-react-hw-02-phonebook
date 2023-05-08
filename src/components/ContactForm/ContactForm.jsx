@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 // import { nanoid } from 'nanoid';
 import { LabelInput,  ContactInputForm, NameInput, AddContactButton } from './ContactForm.styled'
 
@@ -60,4 +61,7 @@ export class ContactForm extends Component {
       
     );
   }
+}
+ContactForm.propTypes = {
+  onSubmit: PropTypes.func
 }

@@ -1,5 +1,6 @@
 import React from 'react';
-import {FilterInput} from './Filter.styled'
+import PropTypes from 'prop-types';
+import { FilterInput } from './Filter.styled';
 
 export const Filter = ({value, onChange}) => {
  
@@ -10,3 +11,8 @@ export const Filter = ({value, onChange}) => {
     </FilterInput>
   );
 };
+
+Filter.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func
+}
